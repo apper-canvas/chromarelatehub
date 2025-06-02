@@ -96,7 +96,7 @@ const OpportunityModal = ({ open, onOpenChange, opportunity, contacts, onSave })
               <SelectTrigger>
                 <SelectValue placeholder="Select contact" />
 </SelectTrigger>
-              <SelectContent>
+<SelectContent>
                 {contacts.map(contact => (
                   <SelectItem key={contact.id} value={contact.id}>
                     {contact.firstName} {contact.lastName} - {contact.company}
@@ -138,7 +138,7 @@ const OpportunityModal = ({ open, onOpenChange, opportunity, contacts, onSave })
                 <SelectTrigger>
                   <SelectValue />
 </SelectTrigger>
-                <SelectContent>
+<SelectContent>
                   {opportunityStages.map(stage => (
                     <SelectItem key={stage.value} value={stage.value}>
                       {stage.label}

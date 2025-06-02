@@ -95,7 +95,7 @@ const OpportunityModal = ({ open, onOpenChange, opportunity, contacts, onSave })
             <Select value={formData.contactId} onValueChange={(value) => handleChange('contactId', value)}>
               <SelectTrigger>
                 <SelectValue placeholder="Select contact" />
-              </SelectTrigger>
+</SelectTrigger>
               <SelectContent>
                 {contacts.map(contact => (
                   <SelectItem key={contact.id} value={contact.id}>
@@ -137,7 +137,7 @@ const OpportunityModal = ({ open, onOpenChange, opportunity, contacts, onSave })
               <Select value={formData.stage} onValueChange={(value) => handleChange('stage', value)}>
                 <SelectTrigger>
                   <SelectValue />
-                </SelectTrigger>
+</SelectTrigger>
                 <SelectContent>
                   {opportunityStages.map(stage => (
                     <SelectItem key={stage.value} value={stage.value}>

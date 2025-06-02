@@ -1,5 +1,4 @@
-import { useState } from 'react'
-import { useCRM } from '../context/CRMContext'
+import { useState, useEffect } from 'react'
 import { Button } from '../components/ui/button'
 import { Input } from '../components/ui/input'
 import ApperIcon from '../components/ApperIcon'
@@ -7,23 +6,38 @@ import ContactList from '../components/features/ContactList'
 import ContactModal from '../components/features/ContactModal'
 import FilterDropdown from '../components/common/FilterDropdown'
 import { contactStatuses } from '../constants/crmConfig'
+import { contactService } from '../services/contactService'
+import { toast } from 'sonner'
 
 const Contacts = () => {
-  const { state, dispatch } = useCRM()
+  const [contacts, setContacts] = useState([])
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [selectedContact, setSelectedContact] = useState(null)
   const [searchTerm, setSearchTerm] = useState('')
   const [statusFilter, setStatusFilter] = useState('all')
+  const [isLoadingContacts, setIsLoadingContacts] = useState(false)
 
-  const filteredContacts = state.contacts.filter(contact => {
-    const matchesSearch = `${contact.firstName} ${contact.lastName} ${contact.email} ${contact.company}`
-      .toLowerCase()
-      .includes(searchTerm.toLowerCase())
-    
-    const matchesStatus = statusFilter === 'all' || contact.status === statusFilter
-    
-    return matchesSearch && matchesStatus
-  })
+  // Fetch contacts on component mount and when filters change
+  useEffect(() => {
+    const fetchContacts = async () => {
+      setIsLoadingContacts(true)
+      try {
+        const filters = {
+          status: statusFilter !== 'all' ? statusFilter : undefined,
+          search: searchTerm || undefined
+        }
+        const contactsData = await contactService.fetchAllContacts(filters)
+        setContacts(contactsData || [])
+      } catch (error) {
+        console.error('Error fetching contacts:', error)
+        toast.error('Failed to load contacts')
+      } finally {
+        setIsLoadingContacts(false)
+      }
+    }
+
+    fetchContacts()
+  }, [statusFilter, searchTerm]) // Re-fetch when filters change
 
   const handleAddContact = () => {
     setSelectedContact(null)
@@ -33,6 +47,49 @@ const Contacts = () => {
   const handleEditContact = (contact) => {
     setSelectedContact(contact)
     setIsModalOpen(true)
+  }
+
+  const handleSaveContact = async (contactData) => {
+    try {
+      if (selectedContact) {
+        // Update existing contact
+        const updatedContact = await contactService.updateContact(selectedContact.Id, contactData)
+        if (updatedContact) {
+          // Update the contact in the local state
+          setContacts(prevContacts => 
+            prevContacts.map(contact => 
+              contact.Id === selectedContact.Id ? updatedContact : contact
+            )
+          )
+        }
+      } else {
+        // Create new contact
+        const newContact = await contactService.createContact(contactData)
+        if (newContact) {
+          // Add the new contact to the local state
+          setContacts(prevContacts => [newContact, ...prevContacts])
+        }
+      }
+      setIsModalOpen(false)
+    } catch (error) {
+      console.error('Error saving contact:', error)
+      // Error message is already shown by the service
+    }
+  }
+
+  const handleDeleteContact = async (contactId) => {
+    try {
+      const success = await contactService.deleteContact(contactId)
+      if (success) {
+        // Remove the contact from local state
+        setContacts(prevContacts => 
+          prevContacts.filter(contact => contact.Id !== contactId)
+        )
+      }
+    } catch (error) {
+      console.error('Error deleting contact:', error)
+      // Error message is already shown by the service
+    }
   }
 
   return (
@@ -77,23 +134,17 @@ const Contacts = () => {
       </div>
 
       <ContactList
-        contacts={filteredContacts}
+        contacts={contacts}
         onEdit={handleEditContact}
-        onDelete={(id) => dispatch({ type: 'DELETE_CONTACT', payload: id })}
+        onDelete={handleDeleteContact}
+        isLoading={isLoadingContacts}
       />
 
       <ContactModal
         open={isModalOpen}
         onOpenChange={setIsModalOpen}
         contact={selectedContact}
-        onSave={(contact) => {
-          if (selectedContact) {
-            dispatch({ type: 'UPDATE_CONTACT', payload: contact })
-          } else {
-            dispatch({ type: 'ADD_CONTACT', payload: contact })
-          }
-          setIsModalOpen(false)
-        }}
+        onSave={handleSaveContact}
       />
     </div>
   )

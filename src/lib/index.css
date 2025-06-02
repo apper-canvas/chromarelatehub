@@ -1,0 +1,144 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 250 250 252;
+    --foreground: 15 23 42;
+    --card: 255 255 255;
+    --card-foreground: 15 23 42;
+    --popover: 255 255 255;
+    --popover-foreground: 15 23 42;
+    --primary: 79 70 229;
+    --primary-foreground: 255 255 255;
+    --secondary: 241 245 249;
+    --secondary-foreground: 15 23 42;
+    --muted: 248 250 252;
+    --muted-foreground: 100 116 139;
+    --accent: 241 245 249;
+    --accent-foreground: 15 23 42;
+    --destructive: 239 68 68;
+    --destructive-foreground: 255 255 255;
+    --border: 226 232 240;
+    --input: 226 232 240;
+    --ring: 79 70 229;
+    --chart-1: 79 70 229;
+    --chart-2: 16 185 129;
+    --chart-3: 251 146 60;
+    --chart-4: 239 68 68;
+    --chart-5: 168 85 247;
+    --radius: 0.75rem;
+    --sidebar-background: 255 255 255;
+    --sidebar-foreground: 15 23 42;
+    --sidebar-primary: 79 70 229;
+    --sidebar-primary-foreground: 255 255 255;
+    --sidebar-accent: 241 245 249;
+    --sidebar-accent-foreground: 15 23 42;
+    --sidebar-border: 226 232 240;
+    --sidebar-ring: 79 70 229;
+    
+    /* CRM Specific Colors */
+    --crm-primary: 79 70 229;
+    --crm-primary-dark: 67 56 202;
+    --crm-secondary: 16 185 129;
+    --crm-success: 34 197 94;
+    --crm-warning: 251 146 60;
+    --crm-danger: 239 68 68;
+    --crm-lead: 168 85 247;
+    --crm-qualified: 59 130 246;
+    --crm-proposal: 251 146 60;
+    --crm-negotiation: 245 101 101;
+    --crm-closed-won: 34 197 94;
+    --crm-closed-lost: 156 163 175;
+  }
+  
+  .dark {
+    --background: 15 23 42;
+    --foreground: 248 250 252;
+    --card: 30 41 59;
+    --card-foreground: 248 250 252;
+    --popover: 30 41 59;
+    --popover-foreground: 248 250 252;
+    --primary: 99 102 241;
+    --primary-foreground: 15 23 42;
+    --secondary: 51 65 85;
+    --secondary-foreground: 248 250 252;
+    --muted: 51 65 85;
+    --muted-foreground: 148 163 184;
+    --accent: 51 65 85;
+    --accent-foreground: 248 250 252;
+    --destructive: 239 68 68;
+    --destructive-foreground: 248 250 252;
+    --border: 51 65 85;
+    --input: 51 65 85;
+    --ring: 99 102 241;
+    --chart-1: 99 102 241;
+    --chart-2: 16 185 129;
+    --chart-3: 251 146 60;
+    --chart-4: 239 68 68;
+    --chart-5: 168 85 247;
+    --sidebar-background: 30 41 59;
+    --sidebar-foreground: 248 250 252;
+    --sidebar-primary: 99 102 241;
+    --sidebar-primary-foreground: 15 23 42;
+    --sidebar-accent: 51 65 85;
+    --sidebar-accent-foreground: 248 250 252;
+    --sidebar-border: 51 65 85;
+    --sidebar-ring: 99 102 241;
+    
+    /* CRM Specific Colors - Dark Mode */
+    --crm-primary: 99 102 241;
+    --crm-primary-dark: 79 70 229;
+    --crm-secondary: 16 185 129;
+    --crm-success: 34 197 94;
+    --crm-warning: 251 146 60;
+    --crm-danger: 239 68 68;
+    --crm-lead: 168 85 247;
+    --crm-qualified: 59 130 246;
+    --crm-proposal: 251 146 60;
+    --crm-negotiation: 245 101 101;
+    --crm-closed-won: 34 197 94;
+    --crm-closed-lost: 156 163 175;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+}
+
+@layer components {
+  .crm-gradient-bg {
+    background: linear-gradient(135deg, hsl(var(--crm-primary)) 0%, hsl(var(--crm-primary-dark)) 100%);
+  }
+  
+  .pipeline-stage-lead {
+    background: linear-gradient(135deg, hsl(var(--crm-lead)) 0%, hsl(var(--crm-lead) / 0.8) 100%);
+  }
+  
+  .pipeline-stage-qualified {
+    background: linear-gradient(135deg, hsl(var(--crm-qualified)) 0%, hsl(var(--crm-qualified) / 0.8) 100%);
+  }
+  
+  .pipeline-stage-proposal {
+    background: linear-gradient(135deg, hsl(var(--crm-proposal)) 0%, hsl(var(--crm-proposal) / 0.8) 100%);
+  }
+  
+  .pipeline-stage-negotiation {
+    background: linear-gradient(135deg, hsl(var(--crm-negotiation)) 0%, hsl(var(--crm-negotiation) / 0.8) 100%);
+  }
+  
+  .pipeline-stage-closed-won {
+    background: linear-gradient(135deg, hsl(var(--crm-closed-won)) 0%, hsl(var(--crm-closed-won) / 0.8) 100%);
+  }
+  
+  .pipeline-stage-closed-lost {
+    background: linear-gradient(135deg, hsl(var(--crm-closed-lost)) 0%, hsl(var(--crm-closed-lost) / 0.8) 100%);
+  }
+}

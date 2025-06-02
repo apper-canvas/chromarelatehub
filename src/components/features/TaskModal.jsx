@@ -104,7 +104,7 @@ const TaskModal = ({ open, onOpenChange, task, contacts, onSave }) => {
               <Select value={formData.type} onValueChange={(value) => handleChange('type', value)}>
                 <SelectTrigger>
                   <SelectValue />
-                </SelectTrigger>
+</SelectTrigger>
                 <SelectContent>
                   {taskTypes.map(type => (
                     <SelectItem key={type.value} value={type.value}>
@@ -122,7 +122,7 @@ const TaskModal = ({ open, onOpenChange, task, contacts, onSave }) => {
               <Select value={formData.priority} onValueChange={(value) => handleChange('priority', value)}>
                 <SelectTrigger>
                   <SelectValue />
-                </SelectTrigger>
+</SelectTrigger>
                 <SelectContent>
                   {taskPriorities.map(priority => (
                     <SelectItem key={priority.value} value={priority.value}>

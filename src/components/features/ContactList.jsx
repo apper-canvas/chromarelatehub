@@ -10,8 +10,8 @@ const ContactList = ({ contacts, onEdit, onDelete }) => {
     return contactStatuses.find(s => s.value === status) || contactStatuses[0]
   }
 
-  const getInitials = (firstName, lastName) => {
-    return `${firstName.charAt(0)}${lastName.charAt(0)}`.toUpperCase()
+const getInitials = (firstName, lastName) => {
+    return `${firstName?.charAt(0) || '?'}${lastName?.charAt(0) || '?'}`.toUpperCase()
   }
 
   return (
@@ -20,18 +20,18 @@ const ContactList = ({ contacts, onEdit, onDelete }) => {
         const statusConfig = getStatusConfig(contact.status)
         
         return (
-          <Card key={contact.id} className="p-6 hover:shadow-md transition-shadow">
+<Card key={contact.Id} className="p-6 hover:shadow-md transition-shadow">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-4">
                 <Avatar className="h-12 w-12">
                   <AvatarFallback className="bg-crm-primary text-white">
-                    {getInitials(contact.firstName, contact.lastName)}
+{getInitials(contact.first_name, contact.last_name)}
                   </AvatarFallback>
                 </Avatar>
                 
                 <div>
                   <h3 className="font-semibold text-lg">
-                    {contact.firstName} {contact.lastName}
+{contact.first_name} {contact.last_name}
                   </h3>
                   <div className="flex items-center gap-4 text-sm text-muted-foreground">
                     <span className="flex items-center gap-1">
@@ -73,7 +73,7 @@ const ContactList = ({ contacts, onEdit, onDelete }) => {
                   <Button
                     variant="ghost"
                     size="sm"
-                    onClick={() => onDelete(contact.id)}
+onClick={() => onDelete(contact.Id)}
                     className="text-destructive hover:text-destructive"
                   >
                     <ApperIcon name="Trash2" size={16} />
